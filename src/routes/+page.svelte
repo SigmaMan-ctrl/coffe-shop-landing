@@ -11,14 +11,14 @@
   });
 
   const menuItems = [
-    { name: 'Espresso Single', price: '18k', desc: 'Single shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=300&fit=crop', slug: 'espresso-single' },
-    { name: 'Espresso Double', price: '22k', desc: 'Double shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=300&fit=crop', slug: 'espresso-double' },
-    { name: 'Americano', price: '25k', desc: 'Espresso + hot water', popular: false, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=300&fit=crop', slug: 'americano' },
-    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true, image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=300&fit=crop', slug: 'latte' },
-    { name: 'Cappuccino', price: '28k', desc: 'Equal parts espresso, milk, foam', popular: false, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=300&fit=crop', slug: 'cappuccino' },
-    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&h=300&fit=crop', slug: 'flat-white' },
-    { name: 'Cold Brew', price: '30k', desc: '18-hour steep', popular: true, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop', slug: 'cold-brew' },
-    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha', popular: false, image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400&h=300&fit=crop', slug: 'matcha-latte' },
+    { name: 'Espresso Single', price: '18k', desc: 'Single shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=800&h=1000&fit=crop' },
+    { name: 'Espresso Double', price: '22k', desc: 'Double shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=800&h=1000&fit=crop' },
+    { name: 'Americano', price: '25k', desc: 'Espresso + hot water', popular: false, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&h=1000&fit=crop' },
+    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true, image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=800&h=1000&fit=crop' },
+    { name: 'Cappuccino', price: '28k', desc: 'Equal parts espresso, milk, foam', popular: false, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=800&h=1000&fit=crop' },
+    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=800&h=1000&fit=crop' },
+    { name: 'Cold Brew', price: '30k', desc: '18-hour steep', popular: true, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&h=1000&fit=crop' },
+    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha', popular: false, image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=800&h=1000&fit=crop' },
   ];
 
   const galleryImages = [
@@ -268,24 +268,39 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       {#each menuItems as item, i}
         <div 
-          class="group relative bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 {mounted ? 'animate-card-appear' : ''}"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden {mounted ? 'animate-card-appear' : ''}"
           style="animation-delay: {i * 0.1}s"
         >
           {#if item.popular}
-            <div class="absolute -top-3 left-4 px-3 py-1 bg-wood text-white text-xs font-medium rounded-full">
+            <div class="absolute -top-3 left-4 px-3 py-1 bg-wood text-white text-xs font-medium rounded-full z-10">
               Popular
             </div>
           {/if}
-          <div class="flex justify-between items-start mb-3">
-            <h3 class="font-bold text-lg group-hover:text-wood transition-colors">{item.name}</h3>
-            <span class="text-wood font-bold">{item.price}</span>
+          
+          <!-- Image container with varied aspect ratios -->
+          <div class="relative overflow-hidden {i % 3 === 1 ? 'aspect-[4/5]' : 'aspect-square'}">
+            <img 
+              src={item.image} 
+              alt={item.name}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <!-- Gradient overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
-          <p class="text-sm text-gray-warm">{item.desc}</p>
-          <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-            <span class="text-xs text-gray-warm">Hot / Cold available</span>
-            <span class="w-8 h-8 bg-wood/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <ArrowRight size={16} class="text-wood" />
-            </span>
+          
+          <!-- Content -->
+          <div class="p-5">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="font-bold text-lg group-hover:text-wood transition-colors">{item.name}</h3>
+              <span class="text-wood font-bold">{item.price}</span>
+            </div>
+            <p class="text-sm text-gray-warm">{item.desc}</p>
+            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
+              <span class="text-xs text-gray-warm">Hot / Cold</span>
+              <span class="w-8 h-8 bg-wood/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <ArrowRight size={16} class="text-wood" />
+              </span>
+            </div>
           </div>
         </div>
       {/each}
