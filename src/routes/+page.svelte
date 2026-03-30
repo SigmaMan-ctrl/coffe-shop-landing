@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Coffee, MapPin, Clock, Phone, Instagram, ArrowRight, Leaf, Award, Menu, X, Star, Mail } from 'lucide-svelte';
+  import { Coffee, MapPin, Clock, Phone, ArrowRight, Leaf, Award, Menu, X, Star, Mail } from 'lucide-svelte';
 
   let scrollY = $state(0);
   let mounted = $state(false);
@@ -11,14 +11,14 @@
   });
 
   const menuItems = [
-    { name: 'Espresso Single', price: '18k', desc: 'Single shot espresso', popular: false },
-    { name: 'Espresso Double', price: '22k', desc: 'Double shot espresso', popular: false },
-    { name: 'Americano', price: '25k', desc: 'Espresso + hot water', popular: false },
-    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true },
-    { name: 'Cappuccino', price: '28k', desc: 'Equal parts espresso, milk, foam', popular: false },
-    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false },
-    { name: 'Cold Brew', price: '30k', desc: '18-hour steep', popular: true },
-    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha', popular: false },
+    { name: 'Espresso Single', price: '18k', desc: 'Single shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=300&fit=crop', slug: 'espresso-single' },
+    { name: 'Espresso Double', price: '22k', desc: 'Double shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=400&h=300&fit=crop', slug: 'espresso-double' },
+    { name: 'Americano', price: '25k', desc: 'Espresso + hot water', popular: false, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=300&fit=crop', slug: 'americano' },
+    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true, image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=300&fit=crop', slug: 'latte' },
+    { name: 'Cappuccino', price: '28k', desc: 'Equal parts espresso, milk, foam', popular: false, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=300&fit=crop', slug: 'cappuccino' },
+    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&h=300&fit=crop', slug: 'flat-white' },
+    { name: 'Cold Brew', price: '30k', desc: '18-hour steep', popular: true, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&h=300&fit=crop', slug: 'cold-brew' },
+    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha', popular: false, image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400&h=300&fit=crop', slug: 'matcha-latte' },
   ];
 
   const galleryImages = [
