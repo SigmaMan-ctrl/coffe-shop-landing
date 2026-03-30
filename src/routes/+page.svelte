@@ -11,22 +11,22 @@
   });
 
   const menuItems = [
-    { name: 'Espresso', price: '18k', desc: 'Bold single shot', popular: false, img: 'photo-1510591509098-f4fdc6d0ff04' },
-    { name: 'Americano', price: '22k', desc: 'Espresso + water', popular: false, img: 'photo-1551030173-122aabc4489c' },
-    { name: 'Latte', price: '26k', desc: 'Espresso + steamed milk', popular: true, img: 'photo-1570968915860-54d5c301fa9f' },
-    { name: 'Cappuccino', price: '26k', desc: 'Espresso, milk, foam', popular: false, img: 'photo-1572442388796-11668a67e53d' },
-    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, img: 'photo-1587080413959-06b859f7f50a' },
-    { name: 'Cold Brew', price: '30k', desc: '18-hour steeped', popular: true, img: 'photo-1517701550927-30cf4ba1dba5' },
-    { name: 'V60 Pour Over', price: '28k', desc: 'Hand-brewed precision', popular: false, img: 'photo-1495474472287-4d71bcdd2085' },
-    { name: 'Matcha Latte', price: '32k', desc: 'Japanese matcha', popular: false, img: 'photo-1536256263959-770b48d82b0a' },
-    { name: 'Affogato', price: '35k', desc: 'Espresso + gelato', popular: false, img: 'photo-1594631252845-29fc4cc8cde9' },
-    { name: 'AeroPress', price: '30k', desc: 'Smooth & clean', popular: false, img: 'photo-1442512595331-e89e73853f31' },
-    { name: 'Mocha', price: '32k', desc: 'Espresso + chocolate', popular: false, img: 'photo-1509042239860-f550ce710b93' },
-    { name: 'Kopi Susu', price: '24k', desc: 'Classic Indonesian style', popular: true, img: 'photo-1501339847302-ac426a4a7cbb' },
-    { name: 'Teh Tarik', price: '20k', desc: 'Pulled milk tea', popular: false, img: 'photo-1556679343-c7306c1972bc' },
-    { name: 'Croffle', price: '25k', desc: 'Croissant + waffle', popular: false, img: 'photo-1606923829579-0cb981a83e2e' },
-    { name: 'Banana Bread', price: '22k', desc: 'House-baked', popular: false, img: 'photo-1586444248902-2f64eddc13df' },
-    { name: 'Croissant', price: '20k', desc: 'Buttery flaky pastry', popular: false, img: 'photo-1623334044303-241021148842' },
+    { name: 'Espresso', price: '18k', desc: 'Bold single shot', img: 'photo-1510591509098-f4fdc6d0ff04' },
+    { name: 'Americano', price: '22k', desc: 'Espresso + water', img: 'photo-1551030173-122aabc4489c' },
+    { name: 'Latte', price: '26k', desc: 'Espresso + steamed milk', img: 'photo-1570968915860-54d5c301fa9f' },
+    { name: 'Cappuccino', price: '26k', desc: 'Espresso, milk, foam', img: 'photo-1572442388796-11668a67e53d' },
+    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', img: 'photo-1587080413959-06b859f7f50a' },
+    { name: 'Cold Brew', price: '30k', desc: '18-hour steeped', img: 'photo-1517701550927-30cf4ba1dba5' },
+    { name: 'V60 Pour Over', price: '28k', desc: 'Hand-brewed precision', img: 'photo-1495474472287-4d71bcdd2085' },
+    { name: 'Matcha Latte', price: '32k', desc: 'Japanese matcha', img: 'photo-1536256263959-770b48d82b0a' },
+    { name: 'Affogato', price: '35k', desc: 'Espresso + gelato', img: 'photo-1594631252845-29fc4cc8cde9' },
+    { name: 'AeroPress', price: '30k', desc: 'Smooth & clean', img: 'photo-1442512595331-e89e73853f31' },
+    { name: 'Mocha', price: '32k', desc: 'Espresso + chocolate', img: 'photo-1509042239860-f550ce710b93' },
+    { name: 'Kopi Susu', price: '24k', desc: 'Classic Indonesian style', img: 'photo-1501339847302-ac426a4a7cbb' },
+    { name: 'Teh Tarik', price: '20k', desc: 'Pulled milk tea', img: 'photo-1556679343-c7306c1972bc' },
+    { name: 'Croffle', price: '25k', desc: 'Croissant + waffle', img: 'photo-1606923829579-0cb981a83e2e' },
+    { name: 'Banana Bread', price: '22k', desc: 'House-baked', img: 'photo-1586444248902-2f64eddc13df' },
+    { name: 'Croissant', price: '20k', desc: 'Buttery flaky pastry', img: 'photo-1623334044303-241021148842' },
   ];
 
   const galleryImages = [
@@ -281,7 +281,7 @@
       </p>
     </div>
     
-    <!-- Menu Grid - Same style as old gallery -->
+    <!-- Menu Grid - Uniform grid style -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       {#each menuItems as item, i}
         <a 
@@ -289,13 +289,6 @@
           class="group relative rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 {mounted ? 'animate-card-appear' : ''}"
           style="animation-delay: {i * 0.05}s"
         >
-          <!-- Popular badge -->
-          {#if item.popular}
-            <div class="absolute top-3 left-3 px-2.5 py-1 bg-wood text-white text-xs font-medium rounded-full z-20">
-              Popular
-            </div>
-          {/if}
-          
           <!-- Image container -->
           <div class="relative aspect-square overflow-hidden">
             <img 
@@ -319,13 +312,6 @@
           </div>
         </a>
       {/each}
-    </div>
-    
-    <div class="text-center mt-12">
-      <a href="javascript:void(0)" class="inline-flex items-center gap-2 text-wood font-medium hover:gap-3 transition-all">
-        View Full Menu
-        <ArrowRight size={18} />
-      </a>
     </div>
   </div>
 </section>
