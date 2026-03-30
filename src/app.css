@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Satoshi", "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  /* Custom colors - warm earth tones */
+  --color-cream: #faf8f5;
+  --color-warm-white: #f5f3ef;
+  --color-wood: #8b7355;
+  --color-wood-dark: #5d4e37;
+  --color-green: #4a7c59;
+  --color-green-dark: #2d5a3d;
+  --color-charcoal: #1a1a1a;
+  --color-gray-warm: #6b6560;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-cream text-charcoal font-sans;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
