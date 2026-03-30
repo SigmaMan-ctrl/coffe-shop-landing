@@ -11,14 +11,22 @@
   });
 
   const menuItems = [
-    { name: 'Espresso', price: '18k', desc: 'Bold single shot', popular: false, img: 'photo-1510591509098-f4fdc6d0ff04', tall: true },
-    { name: 'Americano', price: '25k', desc: 'Espresso + water', popular: false, img: 'photo-1551030173-122aabc4489c', tall: false },
-    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true, img: 'photo-1570968915860-54d5c301fa9f', tall: false },
-    { name: 'Cappuccino', price: '28k', desc: 'Espresso, milk, foam', popular: false, img: 'photo-1572442388796-11668a67e53d', tall: true },
-    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, img: 'photo-1587080413959-06b859f7f50a', tall: false },
-    { name: 'Cold Brew', price: '30k', desc: '18-hour steeped', popular: true, img: 'photo-1517701550927-30cf4ba1dba5', tall: false },
-    { name: 'Matcha Latte', price: '32k', desc: 'Japanese matcha', popular: false, img: 'photo-1536256263959-770b48d82b0a', tall: true },
-    { name: 'Affogato', price: '35k', desc: 'Espresso + gelato', popular: false, img: 'photo-1594631252845-29fc4cc8cde9', tall: false },
+    { name: 'Espresso', price: '18k', desc: 'Bold single shot', popular: false, img: 'photo-1510591509098-f4fdc6d0ff04', span: 'row-span-2' },
+    { name: 'Americano', price: '22k', desc: 'Espresso + water', popular: false, img: 'photo-1551030173-122aabc4489c', span: '' },
+    { name: 'Latte', price: '26k', desc: 'Espresso + steamed milk', popular: true, img: 'photo-1570968915860-54d5c301fa9f', span: 'md:col-span-2' },
+    { name: 'Cappuccino', price: '26k', desc: 'Espresso, milk, foam', popular: false, img: 'photo-1572442388796-11668a67e53d', span: '' },
+    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, img: 'photo-1587080413959-06b859f7f50a', span: '' },
+    { name: 'Cold Brew', price: '30k', desc: '18-hour steeped', popular: true, img: 'photo-1517701550927-30cf4ba1dba5', span: 'row-span-2' },
+    { name: 'V60 Pour Over', price: '28k', desc: 'Hand-brewed precision', popular: false, img: 'photo-1495474472287-4d71bcdd2085', span: '' },
+    { name: 'Matcha Latte', price: '32k', desc: 'Japanese matcha', popular: false, img: 'photo-1536256263959-770b48d82b0a', span: '' },
+    { name: 'Affogato', price: '35k', desc: 'Espresso + gelato', popular: false, img: 'photo-1594631252845-29fc4cc8cde9', span: '' },
+    { name: 'AeroPress', price: '30k', desc: 'Smooth & clean', popular: false, img: 'photo-1442512595331-e89e73853f31', span: '' },
+    { name: 'Mocha', price: '32k', desc: 'Espresso + chocolate', popular: false, img: 'photo-1509042239860-f550ce710b93', span: 'md:col-span-2 md:row-span-2' },
+    { name: 'Kopi Susu', price: '24k', desc: 'Classic Indonesian style', popular: true, img: 'photo-1501339847302-ac426a4a7cbb', span: '' },
+    { name: 'Teh Tarik', price: '20k', desc: 'Pulled milk tea', popular: false, img: 'photo-1556679343-c7306c1972bc', span: '' },
+    { name: 'Croffle', price: '25k', desc: 'Croissant + waffle', popular: false, img: 'photo-1606923829579-0cb981a83e2e', span: '' },
+    { name: 'Banana Bread', price: '22k', desc: 'House-baked', popular: false, img: 'photo-1586444248902-2f64eddc13df', span: '' },
+    { name: 'Croissant', price: '20k', desc: 'Buttery flaky pastry', popular: false, img: 'photo-1623334044303-241021148842', span: '' },
   ];
 
   const galleryImages = [
@@ -265,16 +273,16 @@
       </p>
     </div>
     
-    <!-- Menu Grid - Varied masonry-style layout -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[280px]">
+    <!-- Menu Grid - Responsive masonry with varied spans -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[220px]">
       {#each menuItems as item, i}
         <div 
-          class="group relative rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 {mounted ? 'animate-card-appear' : ''} {item.tall ? 'row-span-2' : ''}"
-          style="animation-delay: {i * 0.08}s"
+          class="group relative rounded-xl md:rounded-2xl overflow-hidden bg-cream shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 {mounted ? 'animate-card-appear' : ''} {item.span}"
+          style="animation-delay: {i * 0.05}s"
         >
-          <!-- Popular badge - inside image -->
+          <!-- Popular badge -->
           {#if item.popular}
-            <div class="absolute top-3 left-3 px-2 py-1 bg-wood text-white text-xs font-medium rounded-full z-20">
+            <div class="absolute top-2 left-2 md:top-3 md:left-3 px-2 py-0.5 md:px-2.5 py-1 bg-wood text-white text-[10px] md:text-xs font-medium rounded-full z-20">
               Popular
             </div>
           {/if}
@@ -282,22 +290,22 @@
           <!-- Image container -->
           <div class="relative w-full h-full overflow-hidden">
             <img 
-              src="https://images.unsplash.com/{item.img}?w=500&h={item.tall ? 800 : 600}&fit=crop&q=80" 
+              src="https://images.unsplash.com/{item.img}?w=600&h=800&fit=crop&q=80" 
               alt={item.name}
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
-            <!-- Subtle gradient at bottom -->
-            <div class="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent"></div>
+            <!-- Gradient overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
           </div>
           
-          <!-- Content overlay at bottom -->
-          <div class="absolute inset-x-0 bottom-0 p-4 z-10">
-            <div class="flex justify-between items-end">
-              <div>
-                <h3 class="font-bold text-white text-lg drop-shadow-md">{item.name}</h3>
-                <p class="text-white/80 text-xs drop-shadow-md">{item.desc}</p>
+          <!-- Content overlay -->
+          <div class="absolute inset-x-0 bottom-0 p-3 md:p-4 z-10">
+            <div class="flex justify-between items-end gap-2">
+              <div class="min-w-0">
+                <h3 class="font-bold text-white text-sm md:text-base truncate drop-shadow-md">{item.name}</h3>
+                <p class="text-white/70 text-[10px] md:text-xs truncate drop-shadow-md">{item.desc}</p>
               </div>
-              <span class="text-wood font-bold text-sm bg-white/90 px-2 py-0.5 rounded-full">{item.price}</span>
+              <span class="text-wood font-bold text-xs md:text-sm bg-white/95 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full flex-shrink-0">{item.price}</span>
             </div>
           </div>
         </div>
