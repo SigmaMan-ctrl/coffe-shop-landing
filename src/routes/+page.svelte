@@ -1,23 +1,24 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { Coffee, MapPin, Clock, Phone, InstagramLogo, ArrowRight, Leaf, Trophy } from 'phosphor-svelte';
+  import { Coffee, MapPin, Clock, Phone, Instagram, ArrowRight, Leaf, Award, Menu, X, Star, Mail } from 'lucide-svelte';
 
   let scrollY = $state(0);
   let mounted = $state(false);
+  let mobileMenuOpen = $state(false);
   
   onMount(() => {
     mounted = true;
   });
 
   const menuItems = [
-    { name: 'Espresso Single', price: '18k', desc: 'Single shot espresso' },
-    { name: 'Espresso Double', price: '22k', desc: 'Double shot espresso' },
-    { name: 'Americano', price: '25k', desc: 'Espresso + hot water' },
-    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk' },
-    { name: 'Cappuccino', price: '28k', desc: 'Equal parts espresso, milk, foam' },
-    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam' },
-    { name: 'Cold Brew', price: '30k', desc: '18-hour steep' },
-    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha' },
+    { name: 'Espresso Single', price: '18k', desc: 'Single shot espresso', popular: false },
+    { name: 'Espresso Double', price: '22k', desc: 'Double shot espresso', popular: false },
+    { name: 'Americano', price: '25k', desc: 'Espresso + hot water', popular: false },
+    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true },
+    { name: 'Cappuccino', price: '28k', desc: 'Equal parts espresso, milk, foam', popular: false },
+    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false },
+    { name: 'Cold Brew', price: '30k', desc: '18-hour steep', popular: true },
+    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha', popular: false },
   ];
 
   const galleryImages = [
@@ -40,10 +41,11 @@
 <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 {scrollY > 50 ? 'bg-cream/95 backdrop-blur-md shadow-sm' : 'bg-transparent'}">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     <a href="/" class="flex items-center gap-2 group">
-      <Coffee size={32} weight="fill" class="text-wood transition-transform group-hover:rotate-12" />
+      <Coffee size={28} class="text-wood transition-transform group-hover:rotate-12" />
       <span class="text-xl font-bold tracking-tight">Kopihuis</span>
     </a>
     
+    <!-- Desktop Menu -->
     <div class="hidden md:flex items-center gap-8">
       <a href="#about" class="text-sm font-medium hover:text-wood transition-colors">About</a>
       <a href="#menu" class="text-sm font-medium hover:text-wood transition-colors">Menu</a>
@@ -53,22 +55,42 @@
         Order Now
       </a>
     </div>
+
+    <!-- Mobile Menu Button -->
+    <button 
+      class="md:hidden p-2"
+      onclick={() => mobileMenuOpen = !mobileMenuOpen}
+      aria-label="Toggle menu"
+    >
+      {#if mobileMenuOpen}
+        <X size={24} />
+      {:else}
+        <Menu size={24} />
+      {/if}
+    </button>
   </div>
+
+  <!-- Mobile Menu -->
+  {#if mobileMenuOpen}
+    <div class="md:hidden bg-cream border-t border-gray-100 px-6 py-4 space-y-4">
+      <a href="#about" class="block py-2" onclick={() => mobileMenuOpen = false}>About</a>
+      <a href="#menu" class="block py-2" onclick={() => mobileMenuOpen = false}>Menu</a>
+      <a href="#gallery" class="block py-2" onclick={() => mobileMenuOpen = false}>Gallery</a>
+      <a href="#location" class="block py-2" onclick={() => mobileMenuOpen = false}>Visit</a>
+    </div>
+  {/if}
 </nav>
 
-<!-- Hero Section - Asymmetric, not centered -->
+<!-- Hero Section -->
 <header class="relative min-h-[100dvh] flex items-center overflow-hidden">
-  <!-- Background Elements -->
   <div class="absolute inset-0 bg-gradient-to-br from-cream via-warm-white to-cream"></div>
   <div class="absolute top-20 right-0 w-[600px] h-[600px] bg-wood/5 rounded-full blur-3xl"></div>
   <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-green/5 rounded-full blur-3xl"></div>
   
-  <!-- Decorative Elements -->
   <div class="absolute top-32 left-[10%] w-px h-32 bg-wood/20"></div>
   <div class="absolute top-48 left-[15%] w-px h-48 bg-wood/10"></div>
   
   <div class="relative max-w-7xl mx-auto px-6 py-32 grid lg:grid-cols-2 gap-12 items-center">
-    <!-- Left Content -->
     <div class="space-y-8 {mounted ? 'animate-slide-up' : 'opacity-0'}">
       <div class="inline-flex items-center gap-2 px-4 py-2 bg-wood/10 rounded-full">
         <span class="w-2 h-2 bg-green rounded-full animate-pulse"></span>
@@ -96,7 +118,6 @@
         </a>
       </div>
       
-      <!-- Stats -->
       <div class="flex gap-12 pt-4">
         <div>
           <div class="text-3xl font-bold text-wood">5+</div>
@@ -113,7 +134,6 @@
       </div>
     </div>
     
-    <!-- Right Image Grid - Asymmetric -->
     <div class="relative {mounted ? 'animate-fade-in' : 'opacity-0'}" style="animation-delay: 0.3s;">
       <div class="grid grid-cols-2 gap-4">
         <div class="space-y-4 mt-8">
@@ -150,10 +170,9 @@
         </div>
       </div>
       
-      <!-- Floating Badge -->
       <div class="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-xl flex items-center gap-4 hover:scale-105 transition-transform">
         <div class="w-12 h-12 bg-green/10 rounded-full flex items-center justify-center">
-          <Leaf size={24} weight="fill" class="text-green" />
+          <Leaf size={24} class="text-green" />
         </div>
         <div>
           <div class="text-sm font-semibold">100% Arabica</div>
@@ -177,7 +196,7 @@
           />
         </div>
         <div class="absolute -bottom-8 -right-8 bg-wood text-white p-6 rounded-2xl shadow-xl">
-          <Trophy size={40} weight="fill" class="mb-2" />
+          <Award size={40} class="mb-2" />
           <div class="font-bold">Best Local</div>
           <div class="text-sm opacity-80">Coffee Shop 2025</div>
         </div>
@@ -209,7 +228,7 @@
         <div class="grid grid-cols-2 gap-6 pt-4">
           <div class="flex items-start gap-3">
             <div class="w-10 h-10 bg-wood/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Coffee size={20} weight="fill" class="text-wood" />
+              <Coffee size={20} class="text-wood" />
             </div>
             <div>
               <div class="font-semibold">Expert Baristas</div>
@@ -218,7 +237,7 @@
           </div>
           <div class="flex items-start gap-3">
             <div class="w-10 h-10 bg-wood/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Leaf size={20} weight="fill" class="text-wood" />
+              <Leaf size={20} class="text-wood" />
             </div>
             <div>
               <div class="font-semibold">Sustainable</div>
@@ -249,9 +268,14 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       {#each menuItems as item, i}
         <div 
-          class="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 {mounted ? 'animate-card-appear' : ''}"
+          class="group relative bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 {mounted ? 'animate-card-appear' : ''}"
           style="animation-delay: {i * 0.1}s"
         >
+          {#if item.popular}
+            <div class="absolute -top-3 left-4 px-3 py-1 bg-wood text-white text-xs font-medium rounded-full">
+              Popular
+            </div>
+          {/if}
           <div class="flex justify-between items-start mb-3">
             <h3 class="font-bold text-lg group-hover:text-wood transition-colors">{item.name}</h3>
             <span class="text-wood font-bold">{item.price}</span>
@@ -268,7 +292,7 @@
     </div>
     
     <div class="text-center mt-12">
-      <a href="#" class="inline-flex items-center gap-2 text-wood font-medium hover:gap-3 transition-all">
+      <a href="javascript:void(0)" class="inline-flex items-center gap-2 text-wood font-medium hover:gap-3 transition-all">
         View Full Menu
         <ArrowRight size={18} />
       </a>
@@ -322,7 +346,7 @@
         <div class="space-y-6">
           <div class="flex items-start gap-4 p-5 bg-cream rounded-2xl">
             <div class="w-12 h-12 bg-wood/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <MapPin size={24} weight="fill" class="text-wood" />
+              <MapPin size={24} class="text-wood" />
             </div>
             <div>
               <div class="font-semibold mb-1">Address</div>
@@ -332,7 +356,7 @@
           
           <div class="flex items-start gap-4 p-5 bg-cream rounded-2xl">
             <div class="w-12 h-12 bg-wood/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Clock size={24} weight="fill" class="text-wood" />
+              <Clock size={24} class="text-wood" />
             </div>
             <div>
               <div class="font-semibold mb-1">Opening Hours</div>
@@ -342,7 +366,7 @@
           
           <div class="flex items-start gap-4 p-5 bg-cream rounded-2xl">
             <div class="w-12 h-12 bg-wood/10 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Phone size={24} weight="fill" class="text-wood" />
+              <Phone size={24} class="text-wood" />
             </div>
             <div>
               <div class="font-semibold mb-1">Contact</div>
@@ -355,6 +379,7 @@
       <div class="relative">
         <div class="aspect-auto h-[500px] bg-cream rounded-3xl overflow-hidden">
           <iframe 
+            title="Location map"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.2!2d110.42!3d-6.97!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTgnMDAuMCJTIDExMMKwMjUnMjEuMCJF!5e0!3m2!1sen!2sid!4v1234567890"
             width="100%" 
             height="100%" 
@@ -384,7 +409,7 @@
     <div class="grid md:grid-cols-4 gap-12 mb-12">
       <div class="md:col-span-2">
         <div class="flex items-center gap-2 mb-4">
-          <Coffee size={32} weight="fill" class="text-wood" />
+          <Coffee size={28} class="text-wood" />
           <span class="text-xl font-bold">Kopihuis</span>
         </div>
         <p class="text-gray-400 max-w-sm mb-6">
@@ -392,14 +417,14 @@
           Join us for an experience beyond just a cup of coffee.
         </p>
         <div class="flex gap-4">
-          <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-wood transition-colors">
-            <InstagramLogo size={20} />
+          <a href="javascript:void(0)" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-wood transition-colors">
+            <Instagram size={20} />
           </a>
-          <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-wood transition-colors">
+          <a href="javascript:void(0)" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-wood transition-colors">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
           </a>
-          <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-wood transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <a href="javascript:void(0)" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-wood transition-colors">
+            <Mail size={20} />
           </a>
         </div>
       </div>
@@ -410,16 +435,16 @@
           <li><a href="#about" class="hover:text-wood transition-colors">About Us</a></li>
           <li><a href="#menu" class="hover:text-wood transition-colors">Menu</a></li>
           <li><a href="#gallery" class="hover:text-wood transition-colors">Gallery</a></li>
-          <li><a href="#" class="hover:text-wood transition-colors">Contact</a></li>
+          <li><a href="javascript:void(0)" class="hover:text-wood transition-colors">Contact</a></li>
         </ul>
       </div>
       
       <div>
         <div class="font-semibold mb-4">Legal</div>
         <ul class="space-y-3 text-gray-400">
-          <li><a href="#" class="hover:text-wood transition-colors">Privacy Policy</a></li>
-          <li><a href="#" class="hover:text-wood transition-colors">Terms of Service</a></li>
-          <li><a href="#" class="hover:text-wood transition-colors">FAQ</a></li>
+          <li><a href="javascript:void(0)" class="hover:text-wood transition-colors">Privacy Policy</a></li>
+          <li><a href="javascript:void(0)" class="hover:text-wood transition-colors">Terms of Service</a></li>
+          <li><a href="javascript:void(0)" class="hover:text-wood transition-colors">FAQ</a></li>
         </ul>
       </div>
     </div>
@@ -432,48 +457,21 @@
 
 <style>
   @keyframes slide-up {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
   @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
   }
   
   @keyframes card-appear {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   
-  .animate-slide-up {
-    animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  
-  .animate-fade-in {
-    animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  
-  .animate-card-appear {
-    animation: card-appear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-  }
+  .animate-slide-up { animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-fade-in { animation: fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .animate-card-appear { animation: card-appear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
 </style>
