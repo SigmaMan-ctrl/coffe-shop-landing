@@ -276,8 +276,9 @@
     <!-- Menu Grid - Responsive masonry with varied spans -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px] md:auto-rows-[220px]">
       {#each menuItems as item, i}
-        <div 
-          class="group relative rounded-xl md:rounded-2xl overflow-hidden bg-cream shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 {mounted ? 'animate-card-appear' : ''} {item.span}"
+        <a 
+          href="/menu/{item.name.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '')}"
+          class="group relative rounded-xl md:rounded-2xl overflow-hidden bg-cream shadow-sm hover:shadow-lg transition-all duration-300 {mounted ? 'animate-card-appear' : ''} {item.span}"
           style="animation-delay: {i * 0.05}s"
         >
           <!-- Popular badge -->
@@ -308,7 +309,7 @@
               <span class="text-wood font-bold text-xs md:text-sm bg-white/95 px-1.5 md:px-2 py-0.5 md:py-1 rounded-full flex-shrink-0">{item.price}</span>
             </div>
           </div>
-        </div>
+        </a>
       {/each}
     </div>
     

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { ArrowLeft, Coffee, Leaf, Flame, Star } from 'lucide-svelte';
+	import { ArrowLeft, Coffee, Leaf, Flame, Star, Clock, Thermometer } from 'lucide-svelte';
 	
 	let { data } = $props();
 	let { item, menuItems } = data;
@@ -37,10 +37,10 @@
 			Back to Menu
 		</a>
 
-		<div class="grid lg:grid-cols-2 gap-12 items-start">
+		<div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 			<!-- Image -->
 			<div class="relative">
-				<div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-xl">
+				<div class="aspect-[4/3] rounded-2xl md:rounded-3xl overflow-hidden shadow-xl">
 					<img 
 						src={item.image} 
 						alt={item.name}
@@ -48,74 +48,92 @@
 					/>
 				</div>
 				{#if item.popular}
-					<div class="absolute top-6 left-6 px-4 py-2 bg-wood text-white font-medium rounded-full flex items-center gap-2">
-						<Star size={16} fill="currentColor" />
-						Popular Choice
+					<div class="absolute top-4 left-4 md:top-6 md:left-6 px-3 py-1.5 md:px-4 md:py-2 bg-wood text-white font-medium rounded-full flex items-center gap-2 shadow-lg">
+						<Star size={14} fill="currentColor" />
+						<span class="text-xs md:text-sm">Popular</span>
 					</div>
 				{/if}
 			</div>
 
 			<!-- Info -->
-			<div class="space-y-6">
+			<div class="space-y-5 lg:space-y-6">
 				<div>
 					<div class="flex flex-wrap gap-2 mb-3">
 						{#each item.tags || [] as tag}
-							<span class="px-3 py-1 bg-wood/10 text-wood text-sm font-medium rounded-full">
+							<span class="px-3 py-1 bg-wood/10 text-wood text-xs md:text-sm font-medium rounded-full">
 								{tag}
 							</span>
 						{/each}
 					</div>
-					<h1 class="text-4xl md:text-5xl font-bold mb-2">{item.name}</h1>
-					<p class="text-2xl font-bold text-wood">{item.price}</p>
+					<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-2">{item.name}</h1>
+					<p class="text-2xl md:text-3xl font-bold text-wood">{item.price}</p>
 				</div>
 
-				<p class="text-gray-warm text-lg leading-relaxed">
+				<p class="text-gray-warm text-base md:text-lg leading-relaxed">
 					{item.fullDesc}
 				</p>
 
 				<!-- Nutrition Info -->
-				<div class="flex gap-6 py-4 border-y border-gray-200">
-					<div class="flex items-center gap-2">
-						<Flame size={20} class="text-wood" />
-						<div>
-							<div class="text-sm text-gray-warm">Calories</div>
-							<div class="font-semibold">{item.calories}</div>
-						</div>
+				<div class="grid grid-cols-3 gap-3 md:gap-4 py-4 md:py-5 border-y border-gray-200/50">
+					<div class="text-center p-3 bg-white rounded-xl">
+						<Flame size={20} class="text-wood mx-auto mb-1" />
+						<div class="text-lg md:text-xl font-bold">{item.calories}</div>
+						<div class="text-[10px] md:text-xs text-gray-warm">Calories</div>
 					</div>
-					<div class="flex items-center gap-2">
-						<Leaf size={20} class="text-green" />
-						<div>
-							<div class="text-sm text-gray-warm">100%</div>
-							<div class="font-semibold">Arabica</div>
-						</div>
+					<div class="text-center p-3 bg-white rounded-xl">
+						<Leaf size={20} class="text-green mx-auto mb-1" />
+						<div class="text-lg md:text-xl font-bold">100%</div>
+						<div class="text-[10px] md:text-xs text-gray-warm">Arabica</div>
 					</div>
-					<div class="flex items-center gap-2">
-						<Coffee size={20} class="text-wood" />
-						<div>
-							<div class="text-sm text-gray-warm">Fresh</div>
-							<div class="font-semibold">Daily Brew</div>
-						</div>
+					<div class="text-center p-3 bg-white rounded-xl">
+						<Coffee size={20} class="text-wood mx-auto mb-1" />
+						<div class="text-lg md:text-xl font-bold">Fresh</div>
+						<div class="text-[10px] md:text-xs text-gray-warm">Daily Brew</div>
+					</div>
+				</div>
+
+				<!-- Options -->
+				<div class="space-y-3">
+					<div class="flex items-center gap-3 p-3 bg-white rounded-xl">
+						<Thermometer size={20} class="text-wood" />
+						<span class="text-sm font-medium">Temperature Options</span>
+					</div>
+					<div class="flex gap-2">
+						<button class="flex-1 py-3 bg-charcoal text-white font-medium rounded-xl hover:bg-wood-dark transition-colors text-sm">
+							Hot ☕
+						</button>
+						<button class="flex-1 py-3 bg-white text-charcoal font-medium rounded-xl hover:bg-cream transition-colors border border-gray-200 text-sm">
+							Cold 🧊
+						</button>
 					</div>
 				</div>
 
 				<!-- Order Button -->
-				<button class="w-full py-4 bg-charcoal text-white font-semibold rounded-2xl hover:bg-wood-dark transition-all hover:scale-[1.02] active:scale-[0.98]">
-					Order Now - {item.price}
+				<button class="w-full py-4 bg-charcoal text-white font-semibold rounded-xl md:rounded-2xl hover:bg-wood-dark transition-all hover:scale-[1.01] active:scale-[0.99] text-base md:text-lg">
+					Order Now — {item.price}
 				</button>
 
-				<p class="text-center text-sm text-gray-warm">
-					Hot & Cold options available
-				</p>
+				<div class="flex items-center justify-center gap-4 text-xs md:text-sm text-gray-warm">
+					<span class="flex items-center gap-1">
+						<Clock size={14} />
+						5-10 min
+					</span>
+					<span>•</span>
+					<span>Available for dine-in & take away</span>
+				</div>
 			</div>
 		</div>
 
 		<!-- Related Items -->
 		{#if relatedItems.length > 0}
-			<div class="mt-20">
-				<h2 class="text-2xl font-bold mb-8">You Might Also Like</h2>
-				<div class="grid md:grid-cols-3 gap-6">
+			<div class="mt-16 md:mt-20">
+				<h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8">You Might Also Like</h2>
+				<div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
 					{#each relatedItems as related}
-						<a href="/menu/{related.name.toLowerCase().replace(/ /g, '-')}" class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all hover:-translate-y-1">
+						<a 
+							href="/menu/{related.name.toLowerCase().replace(/ /g, '-').replace(/[^a-z0-9-]/g, '')}"
+							class="group bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all hover:-translate-y-0.5"
+						>
 							<div class="aspect-[4/3] overflow-hidden">
 								<img 
 									src={related.image} 
@@ -123,10 +141,10 @@
 									class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
 								/>
 							</div>
-							<div class="p-5">
-								<h3 class="font-bold text-lg mb-1 group-hover:text-wood transition-colors">{related.name}</h3>
-								<p class="text-sm text-gray-warm mb-2">{related.desc}</p>
-								<span class="text-wood font-bold">{related.price}</span>
+							<div class="p-4 md:p-5">
+								<h3 class="font-bold text-base md:text-lg mb-1 group-hover:text-wood transition-colors">{related.name}</h3>
+								<p class="text-xs md:text-sm text-gray-warm mb-2">{related.desc}</p>
+								<span class="text-wood font-bold text-sm md:text-base">{related.price}</span>
 							</div>
 						</a>
 					{/each}
