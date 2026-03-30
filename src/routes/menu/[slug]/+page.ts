@@ -109,7 +109,8 @@ export const load = ({ params }) => {
 	const item = menuItems[params.slug];
 	if (!item) throw error(404, 'Menu item not found');
 
-	return { item, menuItems };
+	const menuItemsArray = Object.entries(menuItems).map(([slug, data]) => ({ slug, ...data }));
+  return { item, menuItems: menuItemsArray };
 };
 
 export const entries = () => {
