@@ -11,15 +11,26 @@
   });
 
   const menuItems = [
-    { name: 'Espresso Single', price: '18k', desc: 'Single shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=800&h=1000&fit=crop' },
-    { name: 'Espresso Double', price: '22k', desc: 'Double shot espresso', popular: false, image: 'https://images.unsplash.com/photo-1610889556528-9a770e32642f?w=800&h=1000&fit=crop' },
-    { name: 'Americano', price: '25k', desc: 'Espresso + hot water', popular: false, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&h=1000&fit=crop' },
-    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true, image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=800&h=1000&fit=crop' },
-    { name: 'Cappuccino', price: '28k', desc: 'Equal parts espresso, milk, foam', popular: false, image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=800&h=1000&fit=crop' },
-    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=800&h=1000&fit=crop' },
-    { name: 'Cold Brew', price: '30k', desc: '18-hour steep', popular: true, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=800&h=1000&fit=crop' },
-    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha', popular: false, image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=800&h=1000&fit=crop' },
+    { name: 'Espresso', price: '18k', desc: 'Single shot — bold, intense', popular: false, dark: true },
+    { name: 'Americano', price: '25k', desc: 'Espresso + hot water', popular: false, dark: false },
+    { name: 'Latte', price: '28k', desc: 'Espresso + steamed milk', popular: true, dark: false },
+    { name: 'Cappuccino', price: '28k', desc: 'Espresso, milk, foam', popular: false, dark: true },
+    { name: 'Flat White', price: '28k', desc: 'Velvet microfoam', popular: false, dark: false },
+    { name: 'Cold Brew', price: '30k', desc: '18-hour steeped', popular: true, dark: true },
+    { name: 'Matcha Latte', price: '32k', desc: 'Premium Japanese matcha', popular: false, dark: false },
+    { name: 'Affogato', price: '35k', desc: 'Espresso + vanilla gelato', popular: false, dark: true },
   ];
+
+  const drinkImages = {
+    'Espresso': 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=600&h=800&fit=crop&q=80',
+    'Americano': 'https://images.unsplash.com/photo-1551030173-122aabc4489c?w=600&h=800&fit=crop&q=80',
+    'Latte': 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=600&h=800&fit=crop&q=80',
+    'Cappuccino': 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=600&h=800&fit=crop&q=80',
+    'Flat White': 'https://images.unsplash.com/photo-1587080413959-06b859f7f50a?w=600&h=800&fit=crop&q=80',
+    'Cold Brew': 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=600&h=800&fit=crop&q=80',
+    'Matcha Latte': 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=600&h=800&fit=crop&q=80',
+    'Affogato': 'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?w=600&h=800&fit=crop&q=80',
+  };
 
   const galleryImages = [
     'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&h=400&fit=crop',
@@ -265,41 +276,45 @@
       </p>
     </div>
     
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- Menu Grid - Alternating Layout -->
+    <div class="space-y-4">
       {#each menuItems as item, i}
         <div 
-          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden {mounted ? 'animate-card-appear' : ''}"
-          style="animation-delay: {i * 0.1}s"
+          class="group relative rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl {mounted ? 'animate-card-appear' : ''}"
+          style="animation-delay: {i * 0.08}s"
         >
-          {#if item.popular}
-            <div class="absolute -top-3 left-4 px-3 py-1 bg-wood text-white text-xs font-medium rounded-full z-10">
-              Popular
+          <div class="flex flex-col md:flex-row {item.dark ? 'bg-charcoal text-white' : 'bg-white'}">
+            <!-- Image side -->
+            <div class="w-full md:w-48 h-48 md:h-auto relative overflow-hidden flex-shrink-0">
+              <img 
+                src={drinkImages[item.name]} 
+                alt={item.name}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              {#if item.popular}
+                <div class="absolute top-3 left-3 px-2 py-1 {item.dark ? 'bg-wood' : 'bg-wood'} text-white text-xs font-medium rounded-full z-10">
+                  Popular
+                </div>
+              {/if}
             </div>
-          {/if}
-          
-          <!-- Image container with varied aspect ratios -->
-          <div class="relative overflow-hidden {i % 3 === 1 ? 'aspect-[4/5]' : 'aspect-square'}">
-            <img 
-              src={item.image} 
-              alt={item.name}
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <!-- Gradient overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </div>
-          
-          <!-- Content -->
-          <div class="p-5">
-            <div class="flex justify-between items-start mb-2">
-              <h3 class="font-bold text-lg group-hover:text-wood transition-colors">{item.name}</h3>
-              <span class="text-wood font-bold">{item.price}</span>
-            </div>
-            <p class="text-sm text-gray-warm">{item.desc}</p>
-            <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
-              <span class="text-xs text-gray-warm">Hot / Cold</span>
-              <span class="w-8 h-8 bg-wood/10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <ArrowRight size={16} class="text-wood" />
-              </span>
+            
+            <!-- Content side -->
+            <div class="flex-1 p-5 md:p-6 flex flex-col justify-center">
+              <div class="flex justify-between items-start md:items-center gap-4">
+                <div class="flex-1">
+                  <h3 class="font-bold text-xl mb-1">{item.name}</h3>
+                  <p class="{item.dark ? 'text-white/60' : 'text-gray-warm'} text-sm">{item.desc}</p>
+                </div>
+                <div class="text-right flex-shrink-0">
+                  <span class="text-wood font-bold text-lg">{item.price}</span>
+                </div>
+              </div>
+              <div class="mt-3 flex items-center justify-between">
+                <span class="{item.dark ? 'text-white/40' : 'text-gray-warm'} text-xs">Hot / Cold</span>
+                <span class="w-8 h-8 {item.dark ? 'bg-white/10' : 'bg-cream'} rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowRight size={16} class="{item.dark ? 'text-white' : 'text-wood'}" />
+                </span>
+              </div>
             </div>
           </div>
         </div>
